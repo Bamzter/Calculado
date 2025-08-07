@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Calculadora de Reingreso</title>
+
+    <style>
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            margin: 0;
+
+            padding: 0;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: flex-start;
+
+            min-height: 100vh;
+
+            background-color: #f4f4f4;
+
+        }
+
+        .main-container {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: flex-start;
+
+            gap: 40px;
+
+            flex-wrap: wrap;
+
+            width: 100%;
+
+            padding: 20px;
+
+            max-width: 1200px;
+
+        }
+
+        .container {
+
+            width: 45%;
+
+            background-color: white;
+
+            padding: 20px;
+
+            border-radius: 8px;
+
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+            box-sizing: border-box;
+
+            margin-bottom: 20px;
+
+        }
+
+        img {
+
+            width: 100%;
+
+            max-width: 200px;
+
+            display: block;
+
+            margin: 0 auto 20px auto;
+
+        }
+
+        .input-group {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+        input {
+
+            padding: 10px;
+
+            width: 45%;
+
+            box-sizing: border-box;
+
+            font-size: 1em;
+
+        }
+
+        label {
+
+            font-size: 1.1em;
+
+            margin-right: 10px;
+
+        }
+
+        button {
+
+            padding: 10px 20px;
+
+            margin: 15px 0;
+
+            cursor: pointer;
+
+            background-color: #088E08;  /* Verde para el botón de Calcular */
+
+            color: white;
+
+            border: none;
+
+            border-radius: 5px;
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            font-size: 1em;
+
+        }
+
+        button:hover {
+
+            background-color: #066C06;  /* Verde más oscuro al pasar el mouse */
+
+        }
+
+        .result {
+
+            margin-top: 20px;
+
+            font-size: 1.2em;
+
+            padding: 10px;
+
+            background-color: #d3d3d3;
+
+            border-radius: 5px;
+
+            text-align: center;
+
+        }
+
+        footer {
+
+            margin-top: 40px;
+
+            text-align: center;
+
+            font-size: 0.9em;
+
+            color: #555;
+
+            padding: 10px;
+
+            background-color: #f0f0f0;
+
+            border-top: 1px solid #ddd;
+
+        }
+
+        .holidays-container {
+
+            background-color: white;
+
+            padding: 20px;
+
+            border-radius: 8px;
+
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+            box-sizing: border-box;
+
+            width: 45%;
+
+            margin-bottom: 20px;
+
+        }
+
+        .holidays-container h3 {
+
+            text-align: center;
+
+            margin-bottom: 20px;
+
+        }
+
+        .holiday-list {
+
+            list-style-type: none;
+
+            padding: 0;
+
+        }
+
+        .holiday-item {
+
+            padding: 8px 0;
+
+            border-bottom: 1px solid #ddd;
+
+        }
+
+        .holiday-item:last-child {
+
+            border-bottom: none;
+
+        }
+
+        /* Media Query para pantallas pequeñas */
+
+        @media (max-width: 768px) {
+
+            .main-container {
+
+                flex-direction: column;
+
+                align-items: center;
+
+            }
+
+            .container, .holidays-container {
+
+                width: 90%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+    <div class="main-container">
+
+        <!-- Contenedor de los feriados a la izquierda -->
+
+        <div class="holidays-container">
+
+            <h3>Feriados 2025</h3>
+
+            <div id="feriados"></div>
+
+        </div>
+
+
+
+        <!-- Contenedor de la calculadora en el medio -->
+
+        <div class="container">
+
+            <img src="https://www.cafequipos.com/wp-content/uploads/2023/06/Decatta.png" alt="Logo Decatta">
+
+            <h2>Calculadora de Reingreso</h2>
+
+            
+
+            <!-- Fecha actual -->
+
+            <p id="fechaActual"></p>
+
+
+
+            <label for="hora1">Inicio Break:</label>
+
+            <div class="input-group">
+
+                <input type="number" id="hora1" placeholder="0" min="0"> : 
+
+                <input type="number" id="minuto1" placeholder="0" min="0">
+
+            </div><br><br>
+
+
+
+            <label for="hora2">Tiempo de Break:</label>
+
+            <div class="input-group">
+
+                <input type="number" id="hora2" placeholder="0" min="0"> : 
+
+                <input type="number" id="minuto2" placeholder="0" min="0">
+
+            </div><br><br>
+
+
+
+            <label for="operacion">Selecciona la operación:</label>
+
+            <select id="operacion" name="operacion">
+
+                <option value="sumar">Sumar</option>
+
+                <option value="restar">Restar</option>
+
+            </select><br><br>
+
+
+
+            <!-- Botón para calcular -->
+
+            <button onclick="calcularHoras()">Calcular</button>
+
+
+
+            <div class="result" id="resultado"></div>
+
+        </div>
+
+    </div>
+
+
+
+    <footer>
+
+        <p>&copy; 2025 Proporcionado por Grupo Jamz - Bammaz Studio</p>
+
+    </footer>
+
+
+
+    <script>
+
+        // Mostrar la fecha actual
+
+        document.getElementById('fechaActual').textContent = 'Fecha actual: ' + new Date().toLocaleDateString('es-PE');
+
+
+
+        // Lista de feriados por mes
+
+        const feriados = {
+
+            "Enero": ["Miércoles 1 de enero - Año Nuevo"],
+
+            "Abril": ["Jueves 17 de abril - Jueves Santo", "Viernes 18 de abril - Viernes Santo"],
+
+            "Mayo": ["Jueves 1 de mayo - Día del Trabajo"],
+
+            "Junio": ["Sábado 7 de junio - Batalla de Arica y Día de la Bandera", "Domingo 29 de junio - Día de San Pedro y San Pablo"],
+
+            "Julio": ["Miércoles 23 de julio - Día de la Fuerza Aérea del Perú", "Lunes 28 de julio - Fiestas Patrias", "Martes 29 de julio - Fiestas Patrias"],
+
+            "Agosto": ["Miércoles 6 de agosto - Batalla de Junín", "Sábado 30 de agosto - Santa Rosa de Lima"],
+
+            "Octubre": ["Miércoles 8 de octubre - Combate de Angamos"],
+
+            "Noviembre": ["Sábado 1 de noviembre - Día de Todos los Santos"],
+
+            "Diciembre": ["Lunes 8 de diciembre - Inmaculada Concepción", "Martes 9 de diciembre - Batalla de Ayacucho", "Jueves 25 de diciembre - Navidad"]
+
+        };
+
+
+
+        // Mostrar los feriados por mes
+
+        function mostrarFeriados() {
+
+            let contenido = '<ul class="holiday-list">';
+
+            for (const mes in feriados) {
+
+                contenido += `<li><strong>${mes}</strong>:</li><ul>`;
+
+                feriados[mes].forEach(feriado => {
+
+                    contenido += `<li class="holiday-item">${feriado}</li>`;
+
+                });
+
+                contenido += '</ul>';
+
+            }
+
+            contenido += '</ul>';
+
+            document.getElementById('feriados').innerHTML = contenido;
+
+        }
+
+
+
+        // Llamar a la función para mostrar los feriados
+
+        mostrarFeriados();
+
+
+
+        // Función para calcular la hora de reingreso
+
+        function calcularHoras() {
+
+            let hora1 = parseInt(document.getElementById('hora1').value) || 0;
+
+            let minuto1 = parseInt(document.getElementById('minuto1').value) || 0;
+
+            let hora2 = parseInt(document.getElementById('hora2').value) || 0;
+
+            let minuto2 = parseInt(document.getElementById('minuto2').value) || 0;
+
+
+
+            let operacion = document.getElementById('operacion').value;
+
+
+
+            let totalMinutos, totalHoras;
+
+
+
+            if (operacion === "sumar") {
+
+                totalMinutos = minuto1 + minuto2;
+
+                totalHoras = hora1 + hora2 + Math.floor(totalMinutos / 60);
+
+                totalMinutos = totalMinutos % 60;
+
+            } else {
+
+                totalMinutos = minuto1 - minuto2;
+
+                totalHoras = hora1 - hora2;
+
+
+
+                if (totalMinutos < 0) {
+
+                    totalMinutos += 60;
+
+                    totalHoras -= 1;
+
+                }
+
+            }
+
+
+
+            document.getElementById('resultado').innerHTML = 
+
+                "Hora de reingreso: " + totalHoras + " horas y " + totalMinutos + " minutos";
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+
